@@ -1,30 +1,36 @@
-import React from 'react';
-import SwipeComponent from './SwipeComponent';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import * as React from 'react';
+import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.text} onPress={(e) => {
-        console.debug('press', e.nativeEvent);
-      }}>Привет мир!</Text>
-      <SwipeComponent />
-    </View>
-  );
+import useCachedResources from './hooks/useCachedResources';
+import BottomTabNavigator from './navigation/BottomTabNavigator';
+import LinkingConfiguration from './navigation/LinkingConfiguration';
+
+const Stack = createStackNavigator();
+
+export default function App(props) {
+  const isLoadingComplete = useCachedResources();
+
+  if (!isLoadingComplete) {
+    return null;
+  } else {
+    return (
+      <View style={styles.container}>
+        {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}
+        <NavigationContainer linking={LinkingConfiguration}>
+          <Stack.Navigator>
+            <Stack.Screen name="Root" component={BottomTabNavigator} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ccc',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#fff',
   },
-  text: {
-    width: 360,
-    fontSize: 40,
-    color: 'red',
-    marginBottom: 20,
-    textAlign: 'center',
-  }
 });
