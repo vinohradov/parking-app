@@ -13,8 +13,8 @@ export default function HomeScreen() {
           <Image
             source={
               __DEV__
-                ? require('../assets/images/robot-dev.png')
-                : require('../assets/images/robot-prod.png')
+                ? require('../../assets/images/robot-dev.png')
+                : require('../../assets/images/robot-prod.png')
             }
             style={styles.welcomeImage}
           />
@@ -67,16 +67,17 @@ function DevelopmentModeNotice() {
     return (
       <Text style={styles.developmentModeText}>
         Development mode is enabled: your app will be slower but you can use useful development
-        tools. {learnMoreButton}
-      </Text>
-    );
-  } else {
-    return (
-      <Text style={styles.developmentModeText}>
-        You are not in development mode: your app will run at full speed.
+        tools.
+        {' '}
+        {learnMoreButton}
       </Text>
     );
   }
+  return (
+    <Text style={styles.developmentModeText}>
+      You are not in development mode: your app will run at full speed.
+    </Text>
+  );
 }
 
 function handleLearnMorePress() {
@@ -85,7 +86,7 @@ function handleLearnMorePress() {
 
 function handleHelpPress() {
   WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/get-started/create-a-new-app/#making-your-first-change'
+    'https://docs.expo.io/versions/latest/get-started/create-a-new-app/#making-your-first-change',
   );
 }
 
